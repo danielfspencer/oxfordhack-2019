@@ -1,3 +1,5 @@
 .venv
 tester/test.ttf
 tester/test.ttx
+
+*.pyc
