@@ -89,9 +89,11 @@ first_image_face_ID = detected_faces[0].face_id
 multi_face_image_url = "http://www.historyplace.com/kennedy/president-family-portrait-closeup.jpg"
 multi_image_name = os.path.basename(multi_face_image_url)
 detected_faces2 = face_client.face.detect_with_url(url=multi_face_image_url)
+
 # Search through faces detected in group image for the single face from first image.
 # First, create a list of the face IDs found in the second image.
 second_image_face_IDs = list(map(lambda x: x.face_id, detected_faces2))
+#print(second_image_face_IDs)
 # Next, find similar face IDs like the one detected in the first image.
 similar_faces = face_client.face.find_similar(face_id=first_image_face_ID, face_ids=second_image_face_IDs)
 print(similar_faces[0])
@@ -113,3 +115,26 @@ for face in similar_faces:
         print('    Top: ', str(face_info.face_rectangle.top))
         print('    Width: ', str(face_info.face_rectangle.width))
         print('    Height: ', str(face_info.face_rectangle.height))
+        
+#%%
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
