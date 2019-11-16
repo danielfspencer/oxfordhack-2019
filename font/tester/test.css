@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "undertest";
+  src: url("test.ttf") format("truetype");
+  font-weight: normal;
+}
+
+#container {
+  display: flex;
+  align-items: baseline;
+  margin: 0 auto;
+  width: min-content;
+}
+
+.normal, .font {
+  font-size: 10em;
+  word-wrap:break-word;
+  width: min-content;
+  margin: 0 0.5em;
+}
+
+.font {
+  font-family: "undertest";
+}
