@@ -3,7 +3,7 @@ import requests
 import os
 from os import path
 
-from .cache import cache
+from .utils import cache
 
 
 EMOJI = "https://www.unicode.org/Public/emoji/12.0/emoji-test.txt"

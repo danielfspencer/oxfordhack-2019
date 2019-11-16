@@ -2,13 +2,13 @@ import requests
 import os
 from urllib.parse import urljoin
 
-from . import settings
+from .utils import settings
 
-FACE_KEY = settings.value("azure", "face", "key")
-FACE_ENDPOINT = settings.value("azure", "face", "endpoint")
+FACE_KEY = settings("azure", "face", "key")
+FACE_ENDPOINT = settings("azure", "face", "endpoint")
 
-BING_KEY = settings.value("azure", "bing", "key")
-BING_ENDPOINT = settings.value("azure", "bing", "endpoint")
+BING_KEY = settings("azure", "bing", "key")
+BING_ENDPOINT = settings("azure", "bing", "endpoint")
 
 
 def find_emotions(picture):

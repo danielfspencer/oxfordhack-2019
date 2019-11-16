@@ -3,7 +3,7 @@ import json
 from math import sqrt
 
 from . import emojis
-from .cache import cache
+from .utils import cache
 from .api import search_images, find_emotions
 
 IMAGE = ""
