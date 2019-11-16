@@ -1,9 +1,10 @@
 import json
 from math import sqrt
 
+
 from . import emojis
 from .utils import cache
-from .api import search_images, find_emotions
+from .api import find_emotions, search_images
 
 
 class Face:

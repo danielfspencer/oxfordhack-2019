@@ -1,0 +1,4 @@
+flask
+requests
+azure-cognitiveservices-vision-face
+azure-cognitiveservices-search-imagesearch

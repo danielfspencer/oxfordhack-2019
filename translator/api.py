@@ -4,33 +4,25 @@ from urllib.parse import urljoin
 
 from .utils import settings
 
-FACE_KEY = settings("azure", "face", "key")
-FACE_ENDPOINT = settings("azure", "face", "endpoint")
-
-BING_KEY = settings("azure", "bing", "key")
-BING_ENDPOINT = settings("azure", "bing", "endpoint")
+from . import face_client
+from . import bing_client
 
 
 def find_emotions(picture):
-    url = urljoin(FACE_ENDPOINT, "/face/v1.0/detect",)
-    url += "?returnFaceId=false&returnFaceAttributes=emotion"
-    data = {"url": picture}
-    headers = {"Ocp-Apim-Subscription-Key": FACE_KEY}
-
-    response = requests.post(url, headers=headers, json=data).json()
-    if response and "error" not in response:
-        face = response[0]
-        return face["faceAttributes"]["emotion"]
-    else:
+    try:
+        faces = face_client.face.detect_with_url(
+            url=picture, return_face_attributes=["emotion"]
+        )
+    except:
         return None
+
+    if not faces:
+        return None
+
+    emotions = faces[0].face_attributes.emotion.as_dict()
+    return emotions
 
 
 def search_images(term, count=None):
-    url = urljoin(BING_ENDPOINT, "/bing/v7.0/images/search")
-    url += f"?q={term}"
-    if count:
-        url += f"&count={count}"
-    headers = {"Ocp-Apim-Subscription-Key": BING_KEY}
-
-    response = requests.get(url, headers=headers)
-    return [image["contentUrl"] for image in response.json()["value"]]
+    images = bing_client.images.search(query=term + " human person", count=count)
+    return [image.content_url for image in images.value]
