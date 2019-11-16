@@ -87,3 +87,9 @@ class Emoji:
 
     def __str__(self):
         return f"<Emoji {self.content}>"
+
+    def __eq__(self, other):
+        return self.content == other.content
+
+    def __hash__(self):
+        return hash(self.content)
