@@ -1,2 +1,1 @@
 requests
-azure-cognitiveservices-vision-computervision
