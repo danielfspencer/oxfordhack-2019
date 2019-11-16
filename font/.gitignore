@@ -3,3 +3,4 @@ tester/test.ttf
 tester/test.ttx
 
 *.pyc
+compose/build
