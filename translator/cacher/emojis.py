@@ -15,11 +15,17 @@ GROUP_REGEX = re.compile("^# (sub)?group: (.*)")
 
 
 def parse():
-    _download()
-    with open(".cache/emoji.txt") as f:
+    with cache("emoji.txt") as f:
+        if f.writable():
+            content = requests.get(EMOJI).text
+            f.write(content)
+            lines = content.split("\n")
+        else:
+            lines = f
+
         group = None
         subgroup = None
-        for line in f:
+        for line in lines:
             line = line.strip()
 
             # update group
@@ -51,12 +57,9 @@ def parse():
 
 def _download():
     filename = "emoji.txt"
-    with cache(filename, "w") as f:
+    with cache(filename) as f:
         if not f:
             return
-
-        resp = requests.get(EMOJI)
-        f.write(resp.text)
 
     return filename
 
@@ -74,11 +77,12 @@ class Emoji:
     @property
     def clean_name(self):
         parts = self.name.split()
-        try:
-            parts.remove("face")
-            parts.remove("with")
-        except ValueError:
-            pass
+        removal = ["face", "with", "eyes"]
+        for target in removal:
+            try:
+                parts.remove(target)
+            except ValueError:
+                pass
         return " ".join(parts)
 
     def __str__(self):

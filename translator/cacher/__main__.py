@@ -1,62 +1,68 @@
+import itertools
 import json
-import os
-import requests
-from urllib.parse import urljoin
+from math import sqrt
 
-from . import settings
 from . import emojis
 from .cache import cache
+from .api import search_images, find_emotions
 
-FACE_KEY = settings.value("azure", "face", "key")
-FACE_ENDPOINT = settings.value("azure", "face", "endpoint")
-
-BING_KEY = settings.value("azure", "bing", "key")
-BING_ENDPOINT = settings.value("azure", "bing", "endpoint")
+IMAGE = ""
 
 
 def main():
-    content = {}
+    m = model()
 
-    targets = ["grinning person"]
+    will = find_emotions(IMAGE)
+    print(will)
 
-    with cache("emotions.json", "w") as f:
-        if not f:
-            return
+    best = None
+    best_dist = None
+    for emoji_name, position in m.items():
+        dist = 0
+        for emotion in position:
+            dist += (position[emotion] - will[emotion]) ** 2
+        dist = sqrt(dist)
 
-        for target in targets:
-            results = {}
-            for image in search_images(target, 5):
+        if best is None or dist < best_dist:
+            best = emoji_name
+            best_dist = dist
+
+    print(best)
+    print(best_dist)
+
+
+def model():
+    with cache("model.json") as f:
+        if not f.writable():
+            return json.load(f)
+
+        centers = {}
+        for emoji in emojis.parse():
+            if emoji.group != "Smileys & Emotion" or "face" not in emoji.name:
+                continue
+
+            sums = {}
+            total = 0
+            for image in search_images(emoji.clean_name + " human person", 5):
                 emotions = find_emotions(image)
-                results[image] = emotions
-            content[target] = results
+                if not emotions:
+                    continue
 
-        json.dump(content, f, indent=4)
+                total += 1
+                for key, value in emotions.items():
+                    if key not in sums:
+                        sums[key] = value
+                    else:
+                        sums[key] += value
 
+            for key in sums:
+                sums[key] /= total
 
-def find_emotions(picture):
-    url = urljoin(FACE_ENDPOINT, "/face/v1.0/detect",)
-    url += "?returnFaceId=false&returnFaceAttributes=emotion"
-    data = {"url": picture}
-    headers = {"Ocp-Apim-Subscription-Key": FACE_KEY}
+            if sums:
+                centers[emoji.name] = sums
 
-    response = requests.post(url, headers=headers, json=data)
-    faces = response.json()
-    if faces:
-        face = faces[0]
-        return face["faceAttributes"]["emotion"]
-    else:
-        return None
-
-
-def search_images(term, count=None):
-    url = urljoin(BING_ENDPOINT, "/bing/v7.0/images/search")
-    url += f"?q={term}"
-    if count:
-        url += f"&count={count}"
-    headers = {"Ocp-Apim-Subscription-Key": BING_KEY}
-
-    response = requests.get(url, headers=headers)
-    return [image["contentUrl"] for image in response.json()["value"]]
+        json.dump(centers, f, indent=4)
+        return centers
 
 
 if __name__ == "__main__":
