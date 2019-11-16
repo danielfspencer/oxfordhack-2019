@@ -1,2 +1,10 @@
 font/.venv
 *.pyc
+
+font/tester/test.ttf
+font/tester/test.ttx
+
+font/compose/build
+font/compose/png
+font/compose/NotoColorEmoji.ttf
+font/compose/NotoColorEmoji.tmpl.ttf
