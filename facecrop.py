@@ -49,28 +49,39 @@ def locate(sample_url, compare_url):
             located_face = face
     return(located_face)
 
-def get_rectangle(face):
+def get_rectangle(face, scale):
     rect = face.face_rectangle
+    print(rect)
     left = rect.left
     top = rect.top
-    bottom = left + rect.height
-    right = top + rect.width
-    return ((left, top), (bottom, right))
+    right = left + rect.height
+    bottom = top + rect.width
+    # expand margins
+    height = rect.height
+    width = rect.width
+    ox = left + 0.5*height
+    oy = top + 0.5*width
+    expleft = ox - (height/2)*scale
+    exptop = oy - (width/2)*scale
+    expright = ox + (height/2)*scale
+    expbottom = oy + (width/2)*scale
+    return (expleft, exptop, expright, expbottom)
 
-def draw_rectangle(face, img_url):
-    print(face)
+def draw_rectangle(face, img_url, scale=1.5):
     response = requests.get(img_url)
     img = Image.open(BytesIO(response.content))
-    draw = ImageDraw.Draw(img)
-    draw.rectangle(get_rectangle(face), outline='red')
-    img.show()
+    rect_coords = get_rectangle(face, scale)
+    img_crop = img.crop(rect_coords)
+    img_crop.show()
+    #draw = ImageDraw.Draw(img)
+    #draw.rectangle(get_rectangle(face, scale), outline='red')
+    #img.show()
 
 #%%
 sample_url  = 'https://upload.wikimedia.org/wikipedia/commons/5/56/Donald_Trump_official_portrait.jpg'
 compare_url = 'https://www.dw.com/image/50172356_303.jpg'
 located_face = locate(sample_url,compare_url)
-print(located_face)
-draw_rectangle(located_face,compare_url)
+draw_rectangle(located_face,compare_url, 2)
 
 
 
