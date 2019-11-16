@@ -10,14 +10,14 @@ IMAGE = ""
 
 
 def main():
-    m = model()
+    m = EmojiModel()
 
     will = find_emotions(IMAGE)
     print(will)
 
     best = None
     best_dist = None
-    for emoji_name, position in m.items():
+    for emoji_name, position in m.emojis.items():
         dist = 0
         for emotion in position:
             dist += (position[emotion] - will[emotion]) ** 2
@@ -31,11 +31,18 @@ def main():
     print(best_dist)
 
 
-def model():
-    with cache("model.json") as f:
-        if not f.writable():
-            return json.load(f)
+class EmojiModel:
+    def __init__(self):
+        self.emojis = None
 
+        with cache("model.json") as f:
+            if not f.writable():
+                self.emojis = json.load(f)
+            else:
+                self.emojis = self.load_emojis()
+                json.dump(self.emojis, f, indent=4)
+
+    def load_emojis(self):
         centers = {}
         for emoji in emojis.parse():
             if emoji.group != "Smileys & Emotion" or "face" not in emoji.name:
@@ -61,7 +68,6 @@ def model():
             if sums:
                 centers[emoji.name] = sums
 
-        json.dump(centers, f, indent=4)
         return centers
 
 
