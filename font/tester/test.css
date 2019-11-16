@@ -4,6 +4,12 @@
   font-weight: normal;
 }
 
+@font-face {
+  font-family: "mozilla";
+  src: url("EmojiOneMozilla.ttf") format("truetype");
+  font-weight: normal;
+}
+
 #container {
   display: flex;
   align-items: baseline;
@@ -12,10 +18,15 @@
 }
 
 .normal, .font {
-  font-size: 10em;
+  text-align: center;
+  font-size: 8em;
   word-wrap:break-word;
   width: min-content;
-  margin: 0 0.5em;
+}
+
+.normal {
+  font-family: "mozilla";
+  margin-right: 1em;
 }
 
 .font {
