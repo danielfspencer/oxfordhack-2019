@@ -5,5 +5,3 @@ def resize(file):
     SIZE = 128, 128
     im = ImageOps.fit(im, SIZE, method=Image.ANTIALIAS)
     im.save(file)
-
-resize("pictures/picture1.jpg")
