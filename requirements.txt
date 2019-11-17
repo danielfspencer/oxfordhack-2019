@@ -1,2 +1,10 @@
 opencv-python
 requests
+Pillow
+azure
+pprint
+scikit-image
+dlib
+numpy
+matplotlib
+torchvision

@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw
 from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
 from azure.cognitiveservices.vision.face.models import TrainingStatusType, Person, SnapshotObjectType, OperationStatusType
+from pprint import pprint
 
 # Set the FACE_SUBSCRIPTION_KEY environment variable with your key as the value.
 # This key will serve all examples in this document.
@@ -50,6 +51,7 @@ def locate(sample_url, compare_url):
     return(located_face)
 
 def get_rectangle(face):
+    pprint(face.face_attributes)
     rect = face.face_rectangle
     left = rect.left
     top = rect.top
