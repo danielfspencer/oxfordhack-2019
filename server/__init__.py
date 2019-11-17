@@ -2,7 +2,7 @@ import random
 import string
 import os
 import zipfile
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, send_from_directory
 from werkzeug.utils import secure_filename
 
 from . import creator
@@ -32,13 +32,14 @@ def create():
         if album.filename.split(".", 1)[1] != "zip":
             return redirect(request.url)
 
+        extraction_location = os.path.join(UPLOADS, random_id(12))
+
         filename = secure_filename(album.filename)
-        location = os.path.join(UPLOADS, filename)
+        location = os.path.join(UPLOADS, extraction_location, filename)
+        os.mkdir(extraction_location)
         album.save(location)
 
         with zipfile.ZipFile(location, "r") as z:
-            extraction_location = os.path.join(UPLOADS, random_id(12))
-            os.mkdir(extraction_location)
             z.extractall(extraction_location)
 
         creator.create(extraction_location)
@@ -46,6 +47,11 @@ def create():
         return render_template("font-preview.html")
     else:
         return render_template("index.html")
+
+
+@app.route("/uploads/<path:path>")
+def get_uploads(path):
+    return send_from_directory(UPLOADS, path)
 
 
 def random_id(n):

@@ -9,6 +9,9 @@ from .api import find_emotions, search_images
 
 
 def get_rectangle(rect, scale):
+    if rect is None:
+        return None
+
     left = rect.left
     top = rect.top
     right = left + rect.height
