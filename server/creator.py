@@ -5,6 +5,8 @@ from translator import translator
 from translator import emojis
 from translator.translator import Face
 
+from PIL import Image, ImageOps
+
 from font import compose
 from separator import separator
 
@@ -52,6 +54,7 @@ def create(image_directory):
             result = model.emoji_to_face(emoji)
             if not result:
                 continue
+
 
             results.append((emoji.codepoint.lower(), result.filename))
 
