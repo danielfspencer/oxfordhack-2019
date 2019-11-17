@@ -39,6 +39,8 @@ def target_face(url):
 def locate(sample_url, compare_url):
     sample = target_face(sample_url)
     compare = face_data(compare_url)
+    if len(compare) == 0:
+        return(None)
     sample_id = sample.face_id
     compare_ids = list(map(lambda x: x.face_id, compare))
     # list of similar faces
@@ -68,6 +70,8 @@ def get_rectangle(face, scale):
     return (expleft, exptop, expright, expbottom)
 
 def draw_rectangle(face, img_url, scale=1.5):
+    if face == None:
+        return
     response = requests.get(img_url)
     img = Image.open(BytesIO(response.content))
     rect_coords = get_rectangle(face, scale)
@@ -81,7 +85,7 @@ def draw_rectangle(face, img_url, scale=1.5):
 sample_url  = 'https://upload.wikimedia.org/wikipedia/commons/5/56/Donald_Trump_official_portrait.jpg'
 compare_url = 'https://www.dw.com/image/50172356_303.jpg'
 located_face = locate(sample_url,compare_url)
-draw_rectangle(located_face,compare_url, 2)
+draw_rectangle(located_face,compare_url, 1.5)
 
 
 
