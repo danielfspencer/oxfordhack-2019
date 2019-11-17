@@ -20,7 +20,7 @@ def find_emotions(picture, file=False):
         )
 
     if not faces:
-        return None
+        return None, None
 
     emotions = faces[0].face_attributes.emotion.as_dict()
     box = faces[0].face_rectangle
