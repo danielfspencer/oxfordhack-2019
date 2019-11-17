@@ -6,7 +6,21 @@
   <body>
     <form enctype="multipart/form-data" method="post" action="/create">
       <input id="fileupload" name="album" type="file" accept=".zip" />
-      <input type="submit" value="submit" />
+      <input type="submit" value="submit" onclick="countNumbers()"/>
     </form>
+
+    <p>Progress: <progress id="bar" value="0" max="100"><span>0</span>%</progress></p>
+    <script type="text/javascript">
+      var i = 0;
+      var progressBar = document.getElementById("bar");
+      function countNumbers() {
+        if (i < 100) {
+          i = i + 1;
+          progressBar.value = i;
+        }
+        setTimeout("countNumbers()", 140);
+      }
+    </script>
   </body>
+
 </html>
