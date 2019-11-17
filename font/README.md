@@ -6,8 +6,8 @@
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip3 install -r compose/nototools/requirements.txt
-pip3 install compose/nototools/
+pip install -r compose/nototools/requirements.txt
+pip install compose/nototools/
 ```
 
 #### To test
