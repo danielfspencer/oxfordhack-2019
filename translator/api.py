@@ -9,15 +9,18 @@ from . import bing_client
 
 
 def find_emotions(picture, file=False):
-    if file:
-        with open(picture, "r+b") as f:
-            faces = face_client.face.detect_with_stream(
-                f, return_face_attributes=["emotion"]
+    try:
+        if file:
+            with open(picture, "r+b") as f:
+                faces = face_client.face.detect_with_stream(
+                    f, return_face_attributes=["emotion"]
+                )
+        else:
+            faces = face_client.face.detect_with_url(
+                url=picture, return_face_attributes=["emotion"]
             )
-    else:
-        faces = face_client.face.detect_with_url(
-            url=picture, return_face_attributes=["emotion"]
-        )
+    except:
+        return (None,None)
 
     if not faces:
         return None, None
@@ -28,14 +31,16 @@ def find_emotions(picture, file=False):
 
 
 def find_bounding_boxes(picture, file=False):
-    if file:
-        with open(picture, "r+b") as f:
-            faces = face_client.face.detect_with_stream(f)
-    else:
-        faces = face_client.face.detect_with_url(url=picture)
+    try:
+        if file:
+            with open(picture, "r+b") as f:
+                faces = face_client.face.detect_with_stream(f)
+        else:
+            faces = face_client.face.detect_with_url(url=picture)
 
-    return [face.face_rectangle for face in faces]
-
+        return [face.face_rectangle for face in faces]
+    except:
+        return None
 
 def search_images(term, count=None):
     images = bing_client.images.search(query=term + " human person", count=count)
