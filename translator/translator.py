@@ -31,7 +31,6 @@ def get_rectangle(rect, scale):
 class Face:
     def __init__(self, filename):
         self.filename = filename
-
         img = Image.open(self.filename)
         self.filename = self.filename[:(len(self.filename) - 4)] + ".jpg"
         img = self.rotate_if_exif_specifies(img)
