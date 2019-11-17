@@ -23,36 +23,40 @@ def parse():
         else:
             lines = f
 
-        group = None
-        subgroup = None
-        for line in lines:
-            line = line.strip()
+        return parse_lines(lines)
 
-            # update group
-            match = GROUP_REGEX.match(line)
-            if match:
-                if match.group(1) == "sub":
-                    subgroup = match.group(2)
-                else:
-                    group = match.group(2)
-                continue
 
-            # ignore empty or commented lines
-            if not line or line.startswith("#"):
-                continue
+def parse_lines(lines):
+    group = None
+    subgroup = None
+    for line in lines:
+        line = line.strip()
 
-            match = EMOJI_REGEX.match(line)
-            parts = {
-                "content": match.group(3),
-                "codepoint": match.group(1),
-                "status": match.group(2),
-                "name": match.group(4),
-                "group": group,
-                "subgroup": subgroup,
-            }
+        # update group
+        match = GROUP_REGEX.match(line)
+        if match:
+            if match.group(1) == "sub":
+                subgroup = match.group(2)
+            else:
+                group = match.group(2)
+            continue
 
-            emoji = Emoji(**parts)
-            yield emoji
+        # ignore empty or commented lines
+        if not line or line.startswith("#"):
+            continue
+
+        match = EMOJI_REGEX.match(line)
+        parts = {
+            "content": match.group(3),
+            "codepoint": match.group(1),
+            "status": match.group(2),
+            "name": match.group(4),
+            "group": group,
+            "subgroup": subgroup,
+        }
+
+        emoji = Emoji(**parts)
+        yield emoji
 
 
 def _download():

@@ -45,7 +45,7 @@ def create():
 
         return render_template("font-preview.html")
     else:
-        return render_template("index.html", name=name)
+        return render_template("index.html")
 
 
 def random_id(n):
