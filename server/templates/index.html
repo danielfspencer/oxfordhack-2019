@@ -1,12 +1,87 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Hello from Flask</title>
+    <title>Willmojis</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background-color: black;
+
+        padding: 0;
+        margin: 0;
+      }
+
+      main {
+        background-color: white;
+        margin-left: 50%;
+
+        padding: 80px;
+
+        height: 100vh;
+      }
+    </style>
+    <script>
+      window.onload = function() {
+        let streamingWill = document.getElementById("streaming-will");
+
+        for (let i = 0; i < 20; i++) {
+          var img = document.createElement("img");
+          img.setAttribute("src", "static/will.png");
+          img.style.position = "absolute";
+          img.style.top = Math.random() * window.innerHeight + "px";
+          img.style.left =
+            (Math.random() * (window.innerWidth - 400)) / 2 + "px";
+          console.log(img.style.left);
+          img.style.opacity = "0.5";
+          streamingWill.appendChild(img);
+        }
+
+        setInterval(loop, 1000 / 60);
+      };
+
+      function loop() {
+        let streamingWill = document.getElementById("streaming-will");
+        for (let will of streamingWill.children) {
+          let target = parseInt(will.style.top) + 5;
+          if (target > window.innerHeight) {
+            will.style.top = target - window.innerHeight + "px";
+          } else {
+            will.style.top = target + "px";
+          }
+        }
+      }
+    </script>
   </head>
   <body>
-    <form enctype="multipart/form-data" method="post" action="/create">
-      <input id="fileupload" name="album" type="file" accept=".zip" />
-      <input type="submit" value="submit" />
-    </form>
+    <div id="streaming-will"></div>
+    <main>
+      <h1>Willmojis</h1>
+      <p>
+        Sometimes your standard emojis just don't cut it.
+      </p>
+      <p>
+        Sometimes they're just a bit boring.
+      </p>
+      <p>
+        Sometimes you need Willmojis.
+      </p>
+
+      <img src="/static/picture.png" />
+
+      <h2>Create emojis from a photo album!</h2>
+      <p>
+        Just choose a <code>.zip</code> file with <code>.png</code>'s or
+        <code>.jpg</code>'s
+      </p>
+      <form enctype="multipart/form-data" method="post" action="/create">
+        <input id="fileupload" name="album" type="file" accept=".zip" />
+        <input type="submit" value="submit" />
+      </form>
+    </main>
   </body>
 </html>
