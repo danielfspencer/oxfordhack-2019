@@ -1,5 +1,6 @@
 import os
 
+import shutil
 from translator import translator
 from translator import emojis
 from translator.translator import Face
@@ -34,4 +35,6 @@ def create(image_directory):
             result.cropped.save(cropped_location)
             results.append((emoji.codepoint.lower(), cropped_location))
 
-    compose.build_font(results, os.path.join(image_directory, "font.ttf"))
+    serve_dir = os.path.join(image_directory, "serve")
+    shutil.copytree("font/tester/", serve_dir)
+    compose.build_font(results, os.path.join(serve_dir, "test.ttf"))
