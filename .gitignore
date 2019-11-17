@@ -8,3 +8,4 @@ __pycache__
 
 # application specific
 .cache/
+credentials.json
