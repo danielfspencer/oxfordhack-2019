@@ -1,0 +1,6 @@
+fontTools
+
+[shapediff]
+booleanOperations
+defcon
+Pillow
