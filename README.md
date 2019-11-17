@@ -1,6 +1,20 @@
 # Willmojis
 
+Have you felt that your default emojis are just a little bland? That you just
+wanted to replace them with pictures of you (or your friend's) faces?
+
+Well, want no more! Willmojis (named after our lovely friend Will, of course)
+are designed to automatically generate a downloadable TTF emoji font from a
+small album of photos. Our website will take a zip file containing photos,
+run them through Azure's Face API to help identify the most appropriate
+emoji, and then crop the images to the perfect size.
+
 ## Running
+
+Since this was made at a hackathon, it probably won't work for you (or even
+us again) :(
+
+Anyway, these are some instructions that *might* help you get it installed.
 
 Follow the installation instructions in `font/README.md`, then run:
 
