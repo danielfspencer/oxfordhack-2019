@@ -26,6 +26,8 @@ class EmojiModel:
         self.faces = faces
 
     def emoji_to_face(self, emoji):
+        if emoji.name not in self.emojis:
+            return None
         center = self.emojis[emoji.name]
 
         best = None

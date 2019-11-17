@@ -8,12 +8,18 @@ from . import face_client
 from . import bing_client
 
 
-def find_emotions(picture):
+def find_emotions(picture, file=False):
     try:
-        faces = face_client.face.detect_with_url(
-            url=picture, return_face_attributes=["emotion"]
-        )
-    except:
+        if file:
+            with open(picture, "r+b") as f:
+                faces = face_client.face.detect_with_stream(
+                    f, return_face_attributes=["emotion"]
+                )
+        else:
+            faces = face_client.face.detect_with_url(
+                url=picture, return_face_attributes=["emotion"]
+            )
+    except RuntimeError:
         return None
 
     if not faces:
