@@ -2,7 +2,7 @@ import random
 import string
 import os
 import zipfile
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, send_from_directory
 from werkzeug.utils import secure_filename
 
 from . import creator
@@ -47,6 +47,11 @@ def create():
         return render_template("font-preview.html")
     else:
         return render_template("index.html")
+
+
+@app.route("/uploads/<path:path>")
+def get_uploads(path):
+    return send_from_directory(UPLOADS, path)
 
 
 def random_id(n):
