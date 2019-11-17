@@ -1,9 +1,19 @@
-font/.venv
-*.pyc
+# virtual environments
+.venv/
+venv/
 
+# python caches
+__pycache__
+*.pyc
+.mypy_cache/
+
+# application specific
+.cache/
+credentials.json
+
+# font
 font/tester/test.ttf
 font/tester/test.ttx
-
 font/compose/build
 font/compose/png
 font/compose/NotoColorEmoji.ttf

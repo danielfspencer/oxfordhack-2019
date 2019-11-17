@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: nototools
+Version: 0.2.0
+Summary: Noto font tools
+Home-page: https://code.google.com/p/noto/
+Author: Noto Authors
+Author-email: noto-font@googlegroups.com
+License: Apache
+Description: Noto font tools are a set of scripts useful for release
+        engineering of Noto and similar fonts
+Platform: UNKNOWN
+Provides-Extra: shapediff

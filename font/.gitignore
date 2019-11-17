@@ -1,0 +1,9 @@
+.venv
+tester/test.ttf
+tester/test.ttx
+
+*.pyc
+compose/build
+compose/png
+compose/NotoColorEmoji.ttf
+compose/NotoColorEmoji.tmpl.ttf

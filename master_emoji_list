@@ -1,32 +1,31 @@
-# subgroup: face-smiling
-1F600                              # 😀 grinning face
-1F602                              # 😂 face with tears of joy
-1F642                              # 🙂 slightly smiling face
-1F609                              # 😉 winking face
-1F618                              # 😘 face blowing a kiss
+1F600                                      ; fully-qualified     # 😀 grinning face
+1F602                                      ; fully-qualified     # 😂 face with tears of joy
+1F642                                      ; fully-qualified     # 🙂 slightly smiling face
+1F609                                      ; fully-qualified     # 😉 winking face
+1F60A                                      ; fully-qualified     # 😊 smiling face with smiling eyes
 
-# subgroup: face-neutral-skeptical
-1F910                              # 🤐 zipper-mouth face
-1F610                              # 😐 neutral face
-1F60F                              # 😏 smirking face
-1F612                              # 😒 unamused face
+1F910                                      ; fully-qualified     # 🤐 zipper-mouth face
+1F928                                      ; fully-qualified     # 🤨 face with raised eyebrow
+1F610                                      ; fully-qualified     # 😐 neutral face
+1F60F                                      ; fully-qualified     # 😏 smirking face
+1F612                                      ; fully-qualified     # 😒 unamused face
+1F644                                      ; fully-qualified     # 🙄 face with rolling eyes
 
-# subgroup: face-sleepy
-1F60C                              # 😌 relieved face
-1F614                              # 😔 pensive face
-1F924                              # 🤤 drooling face
+1F60C                                      ; fully-qualified     # 😌 relieved face
+1F614                                      ; fully-qualified     # 😔 pensive face
+1F924                                      ; fully-qualified     # 🤤 drooling face
 
-# subgroup: face-concerned
-1F615                              # 😕 confused face
-1F61F                              # 😟 worried face
-1F62E                              # 😮 face with open mouth
-1F62F                              # 😯 hushed face
-1F633                              # 😳 flushed face
-1F627                              # 😧 anguished face
-1F628                              # 😨 fearful face
-1F62D                              # 😭 loudly crying face
-1F616                              # 😖 confounded face
-1F61E                              # 😞 disappointed face
-1F613                              # 😓 downcast face with sweat
-1F629                              # 😩 weary face
-1F620                              # 😠 angry face
+1F615                                      ; fully-qualified     # 😕 confused face
+1F61F                                      ; fully-qualified     # 😟 worried face
+1F62E                                      ; fully-qualified     # 😮 face with open mouth
+1F62F                                      ; fully-qualified     # 😯 hushed face
+1F632                                      ; fully-qualified     # 😲 astonished face
+1F633                                      ; fully-qualified     # 😳 flushed face
+1F627                                      ; fully-qualified     # 😧 anguished face
+1F628                                      ; fully-qualified     # 😨 fearful face
+1F622                                      ; fully-qualified     # 😢 crying face
+1F62D                                      ; fully-qualified     # 😭 loudly crying face
+1F631                                      ; fully-qualified     # 😱 face screaming in fear
+1F61E                                      ; fully-qualified     # 😞 disappointed face
+1F629                                      ; fully-qualified     # 😩 weary face
+1F971                                      ; fully-qualified     # 🥱 yawning face
