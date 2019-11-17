@@ -17,9 +17,8 @@ def create(image_directory):
 
         print(image)
 
-        emotes = find_emotions(image, file=True)
-        if emotes:
-            face = Face(emotes, image)
+        face = Face(image)
+        if face.cropped and face.emotions:
             faces.append(face)
 
     model = translator.EmojiModel(faces)
@@ -32,6 +31,8 @@ def create(image_directory):
             if not result:
                 continue
 
-            results.append((emoji.codepoint.lower(), result.data))
+            cropped_location = result.filename + ".smaller.png"
+            result.cropped.save(cropped_location)
+            results.append((emoji.codepoint.lower(), cropped_location))
 
     compose.build_font(results, os.path.join(image_directory, "font.ttf"))

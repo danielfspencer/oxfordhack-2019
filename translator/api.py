@@ -9,24 +9,31 @@ from . import bing_client
 
 
 def find_emotions(picture, file=False):
-    try:
-        if file:
-            with open(picture, "r+b") as f:
-                faces = face_client.face.detect_with_stream(
-                    f, return_face_attributes=["emotion"]
-                )
-        else:
-            faces = face_client.face.detect_with_url(
-                url=picture, return_face_attributes=["emotion"]
+    if file:
+        with open(picture, "r+b") as f:
+            faces = face_client.face.detect_with_stream(
+                f, return_face_attributes=["emotion"]
             )
-    except RuntimeError:
-        return None
+    else:
+        faces = face_client.face.detect_with_url(
+            url=picture, return_face_attributes=["emotion"]
+        )
 
     if not faces:
         return None
 
     emotions = faces[0].face_attributes.emotion.as_dict()
     return emotions
+
+
+def find_bounding_boxes(picture, file=False):
+    if file:
+        with open(picture, "r+b") as f:
+            faces = face_client.face.detect_with_stream(f)
+    else:
+        faces = face_client.face.detect_with_url(url=picture)
+
+    return [face.face_rectangle for face in faces]
 
 
 def search_images(term, count=None):
