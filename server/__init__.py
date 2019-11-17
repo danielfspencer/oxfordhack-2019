@@ -1,5 +1,6 @@
 import random
 import string
+import threading
 import os
 import zipfile
 from flask import Flask, render_template, request, redirect, send_from_directory
@@ -32,7 +33,8 @@ def create():
         if album.filename.split(".", 1)[1] != "zip":
             return redirect(request.url)
 
-        extraction_location = os.path.join(UPLOADS, random_id(12))
+        rid = random_id(12)
+        extraction_location = os.path.join(UPLOADS, rid)
 
         filename = secure_filename(album.filename)
         location = os.path.join(UPLOADS, extraction_location, filename)
@@ -44,7 +46,7 @@ def create():
 
         creator.create(extraction_location)
 
-        return render_template("font-preview.html")
+        return redirect(f"/uploads/{rid}/serve/index.html")
     else:
         return render_template("index.html")
 
