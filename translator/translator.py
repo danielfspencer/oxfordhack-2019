@@ -29,13 +29,62 @@ class Face:
     def __init__(self, filename):
         self.filename = filename
 
-        self.emotions, box = find_emotions(filename, file=True)
+        print("bef: {}".format(self.filename))
+        img = Image.open(self.filename)
+        self.filename = self.filename[:(len(self.filename) - 4)] + ".jpg"
+        print("aft: {}".format(self.filename))
+        img = self.rotate_if_exif_specifies(img)
+        width, height = img.size
+        img = img.resize((width,height), Image.NEAREST)
+        img = img.resize((width, height), Image.NEAREST)
+        img.save(self.filename, "JPEG", compress_level=9)
 
-        img = Image.open(filename)
+        self.emotions, box = find_emotions(self.filename, file=True)
+
+        img = Image.open(self.filename)
         rect_coords = get_rectangle(box, 1.5)
         self.cropped = img.crop(rect_coords)
         self.cropped = ImageOps.fit(self.cropped, (128, 128), method=Image.ANTIALIAS)
 
+    def rotate_if_exif_specifies(self, image):
+        try:
+            exif_tags = image._getexif()
+            if exif_tags is None:
+                # No EXIF tags, so we don't need to rotate
+                print('No EXIF data, so not transforming')
+                return image
+
+            value = exif_tags[274]
+        except KeyError:
+            # No rotation tag present, so we don't need to rotate
+            print('EXIF data present but no rotation tag, so not transforming')
+            return image
+
+        value_to_transform = {
+            1: (0, False),
+            2: (0, True),
+            3: (180, False),
+            4: (180, True),
+            5: (-90, True),
+            6: (-90, False),
+            7: (90, True),
+            8: (90, False)
+        }
+
+        try:
+            angle, flip = value_to_transform[value]
+        except KeyError:
+            print(f'EXIF rotation \'{value}\' unknown, not transforming')
+            return image
+
+        print(f'EXIF rotation \'{value}\' detected, rotating {angle} degrees, flip: {flip}')
+        if angle != 0:
+            image = image.rotate(angle)
+
+        if flip:
+            image = image.tranpose(Image.FLIP_LEFT_RIGHT)
+
+        return image
 
 class EmojiModel:
     def __init__(self, faces):

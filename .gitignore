@@ -9,7 +9,7 @@ __pycache__
 
 # application specific
 .cache/
-credentials.json
+.vscode
 
 # font
 font/tester/test.ttf
@@ -18,6 +18,4 @@ font/compose/build
 font/compose/png
 font/compose/NotoColorEmoji.ttf
 font/compose/NotoColorEmoji.tmpl.ttf
-
-# editor
-.vscode
+*.zip
