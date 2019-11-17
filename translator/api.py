@@ -23,7 +23,8 @@ def find_emotions(picture, file=False):
         return None
 
     emotions = faces[0].face_attributes.emotion.as_dict()
-    return emotions
+    box = faces[0].face_rectangle
+    return emotions, box
 
 
 def find_bounding_boxes(picture, file=False):

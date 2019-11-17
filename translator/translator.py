@@ -5,7 +5,7 @@ from PIL import Image, ImageOps
 
 from . import emojis
 from .utils import cache
-from .api import find_emotions, search_images, find_bounding_boxes
+from .api import find_emotions, search_images
 
 
 def get_rectangle(rect, scale):
@@ -29,18 +29,12 @@ class Face:
     def __init__(self, filename):
         self.filename = filename
 
-        self.emotions = find_emotions(filename, file=True)
+        self.emotions, box = find_emotions(filename, file=True)
 
-        boxes = find_bounding_boxes(filename, file=True)
-        if len(boxes) == 1:
-            img = Image.open(filename)
-            rect_coords = get_rectangle(boxes[0], 1.5)
-            self.cropped = img.crop(rect_coords)
-            self.cropped = ImageOps.fit(
-                self.cropped, (128, 128), method=Image.ANTIALIAS
-            )
-        else:
-            self.cropped = None
+        img = Image.open(filename)
+        rect_coords = get_rectangle(box, 1.5)
+        self.cropped = img.crop(rect_coords)
+        self.cropped = ImageOps.fit(self.cropped, (128, 128), method=Image.ANTIALIAS)
 
 
 class EmojiModel:
@@ -79,7 +73,7 @@ class EmojiModel:
             sums = {}
             total = 0
             for image in search_images(emoji.clean_name + " human person", 5):
-                emotions = find_emotions(image)
+                emotions, _ = find_emotions(image)
                 if not emotions:
                     continue
 

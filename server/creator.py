@@ -3,7 +3,6 @@ import os
 from translator import translator
 from translator import emojis
 from translator.translator import Face
-from translator.api import find_emotions
 
 from font import compose
 
