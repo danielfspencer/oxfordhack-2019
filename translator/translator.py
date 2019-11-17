@@ -29,10 +29,8 @@ class Face:
     def __init__(self, filename):
         self.filename = filename
 
-        print("bef: {}".format(self.filename))
         img = Image.open(self.filename)
         self.filename = self.filename[:(len(self.filename) - 4)] + ".jpg"
-        print("aft: {}".format(self.filename))
         img = self.rotate_if_exif_specifies(img)
         width, height = img.size
         img = img.resize((width,height), Image.NEAREST)
