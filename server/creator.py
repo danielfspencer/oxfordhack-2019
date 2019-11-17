@@ -11,15 +11,15 @@ from font import compose
 from separator import separator
 
 def create(image_directory):
-    separator.init()
 
     faces = []
     for image in os.listdir(image_directory)[:10]:
         if not (image.endswith(".png") or image.endswith(".jpg")):
             continue
+
+        print(f"classify '{image}'")
         image = os.path.join(image_directory, image)
 
-        print(image)
 
         face = Face(image)
         if face.cropped and face.emotions:
@@ -28,6 +28,7 @@ def create(image_directory):
     model = translator.EmojiModel(faces)
 
     results = []
+    separator.init()
 
     used_faces = []
     with open("master_emoji_list", "r") as f:

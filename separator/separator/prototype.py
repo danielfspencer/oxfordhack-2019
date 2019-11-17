@@ -5,6 +5,7 @@ import matplotlib
 import torch
 import numpy as np
 import cv2
+import os
 
 # Apply the transformations needed
 import torchvision.transforms as T
@@ -74,5 +75,5 @@ def segment(net, inpath, outpath, dev='cpu'):
   matplotlib.image.imsave(outpath, rgb)
 
 def seperate(inpath, outpath):
-    print(f"seperate image '{inpath}'...")
+    print(f"seperate bg '{os.path.basename(inpath)}'...")
     segment(dlab, inpath, outpath)
